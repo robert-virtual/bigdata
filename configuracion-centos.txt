@@ -1,0 +1,45 @@
+sudo yum update
+
+sudo yum install java-1.8.0-openjdk
+sudo yum install java-1.8.0-openjdk-devel
+
+sudo yum install wget
+wget https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.3.tar.gz
+tar xvzf hadoop-3.3.3.tar.gz
+sudo mv hadoop-3.3.3 /opt/hadoop
+
+sudo yum install firewalld
+
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+chmod 0600 ~/.ssh/authorized_keys
+
+hdfs namenode -format
+sudo firewall-cmd --zone=public --permanent --add-port=9870/tcp
+start-dfs.sh
+
+hdfs dfs -mkdir /user
+hdfs dfs -mkdir /user/robert
+start-yarn.sh
+sudo firewall-cmd --zone=public --permanent --add-port=8088/tcp
+
+stop-yarn.sh
+stop-dfs.sh
+reboot
+start-dfs.sh
+start-yarn.sh
+
+mkdir java-word-count
+cd java-word-count/
+touch WordCount.java 
+hadoop com.sun.tools.javac.Main WordCount.java
+jar cf wc.jar WordCount*.class
+
+hadoop fs -mkdir /user/robert/wordcount
+hadoop fs -mkdir /user/robert/wordcount/input
+
+echo hola mundo hadoop > file01.txt
+echo hola mundo mapreduce > file02.txt
+
+hadoop fs -put file01.txt file02.txt /user/robert/wordcount/input
+hadoop jar wc.jar WordCount /user/robert/wordcount/input /user/robert/wordcount/output

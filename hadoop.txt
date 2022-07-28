@@ -1,0 +1,45 @@
+Pasos para instalar HADOOP
+
+1. Ingresar a https://hadoop.apache.org/releases.html
+2. Descargar el archivo de la version mas reciente  de tipo BINARY
+3. Abrir la terminal
+4. Ejecutar el comando para cambiar a la raiz del directorio de archivos del ususario= cd
+5. Validamos que nos encontremos en /home/[nombreUsuario] con el comando= pwd
+6. Verificamos lo que contiene el directorio en el que nos encontramos con el comando= ls
+7. navegamos a la carpeta downloads con el comando= cd Downloads
+8. Verificamos nuevamente que se encuentre el archivo descargado de HADOOP por medio de= ls
+9. Nos cambiamos al directorio donde instalaremos hadoop con= cd /opt
+10. En la misma terminal o en una ventana aparte ingresar como super usuario con el comando= su - root
+11.Ingresar contrase;a 
+12. Reingresar al directorio opt = cd /opt
+13. Crear un directorio con el nombre de "hadoop" con el comando= mkdir hadoop
+14. cambiar los permisos de acceso con el comando= chown [nombreUsuario] /opt/hadoop
+15. volver al usuario normal y volver a la carpeta hadoop en opt= cd /opt/
+16. verificar que se cambio la autorizacion de acceso con el comando= ls -l
+17. ingresar a la carpeta "hadoop
+18. Extraer los archivos de Hadoop en esta carpeta con el siguiente comando= tar xvf /home/[nombreUsuario]/Downloads/[nombreArchivoHadoop].tar.gz
+19. Mover el contenido extraido de la carpeta autogenerada a la carpeta "hadoop"= mv hadoop-3.3.3/* .
+20. Eliminar carpeta autogenerada= rmdir hadoop-3.3.3/
+21. Descargar el JDK del Moodle
+22. validar la version de java con el comando= java -version
+23. Ingresar nuevamente como usuario root
+24. ir a la carpeta de descargas con el comando= cd /home/[nombreUsuario]/Downloads
+25. instalar el JDK= rpm -ivh [nombreJDK].rpm
+26. cambiar la version de java con el comando= alternatives --config java
+27. seleccione el numero con la version correcta del JDK
+28. validar si esta correctamente instalado ejecutando el comando= javac
+29. Ejecutar el comando para cambiar a la raiz del directorio de archivos del ususario= cd
+30. Visualizar los ficheros ocultos= ls -a
+31. Ingresar a editar el archivo oculto .bashrc= gedit .bashrc
+32. Agregar al final del archivo lo siguiente:
+	export $HADOOP_HOME=/opt/hadoop
+	export $JAVA_HOME=/usr/java/jdk1.8.0_251-amd64
+	export $PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+33. Guardar y cerrar el archivo
+34. ejcutar las variables de entorno en el archivo bashrc= 
+35. ejecutar el comando= hadoop version
+36. generar la llave publica y privada para la conexion ssh= ssh-keygen
+37. aceptar el archivo de almacenamiento de la llave y no ingresar el passphrase
+38. navegar al directorio .ssh= cd /home/hadoop/.ssh
+39. copiar de la llave al fichero authorized keys= cp id_rsa.pub authorized_keys
+40. validar configuracion ingresando por medio de ssh al nodo con el comando= ssh [hostname]
